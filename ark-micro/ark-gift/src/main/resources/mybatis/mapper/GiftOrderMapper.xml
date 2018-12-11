@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkgift.mapper.GiftOrderMapper" >
+  
+  <sql id="Base_Column_List" >
+    id, created, wx_open_id, wx_nick, num, remain_num, pay_no, act_id, expire_time, 
+    status, wx_pic_url, gift_msg, pay_money, act_name, item_name, item_standard,
+    item_price, freight_price, share_title, share_des, share_icon
+  </sql>
+
+  <select id="selectById" resultType="com.efruit.micro.arkgift.domain.GiftOrder">
+    select 
+    <include refid="Base_Column_List" />
+    from gift_order
+    where id = #{id}
+  </select>
+  
+  <insert id="insert">
+    insert into gift_order (id,wx_open_id, 
+      wx_nick, num, remain_num, 
+       act_id, expire_time, 
+      status, wx_pic_url, gift_msg, pay_money, act_name, item_name, item_standard,
+    		item_price, freight_price, share_title, share_des, share_icon
+      )
+    values (#{id}, #{wxOpenId}, 
+      #{wxNick}, #{num}, #{remainNum}, 
+       #{actId}, #{expireTime}, 
+      #{status}, #{wxPicUrl}, #{giftMsg},#{payMoney}, #{actName}, #{itemName}, #{itemStandard},
+      #{itemPrice}, #{freightPrice}, #{shareTitle}, #{shareDes}, #{shareIcon}
+      )
+  </insert>
+  
+  <update id="decrement">
+  	update gift_order set remain_num = remain_num - 1,status = #{state} where id = #{orderId}
+  </update>
+  
+  <update id="updateByIdSelective">
+    update gift_order
+    <set >
+      <if test="wxOpenId != null" >
+        wx_open_id = #{wxOpenId},
+      </if>
+      <if test="wxNick != null" >
+        wx_nick = #{wxNick},
+      </if>
+      <if test="num != null" >
+        num = #{num},
+      </if>
+      <if test="remainNum != null" >
+        remain_num = #{remainNum},
+      </if>
+      <if test="actId != null" >
+        act_id = #{actId},
+      </if>
+      <if test="payNo != null">
+      	pay_no = #{payNo},
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="wxPicUrl != null" >
+        wx_pic_url = #{wxPicUrl},
+      </if>
+      <if test="giftMsg != null" >
+        gift_msg = #{giftMsg},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="selectByOpenid" resultType="com.efruit.micro.arkgift.domain.GiftOrder">
+    select 
+    <include refid="Base_Column_List" />
+    from gift_order
+    where wx_open_id = #{openid} AND `status` != 0 order by expire_time DESC
+  </select>
+
+  <select id="selectActOrderListByOpenId" resultType="com.efruit.micro.arkgift.domain.GiftOrder">
+    select
+    <include refid="Base_Column_List" />
+    from gift_order
+    where wx_open_id = #{openid} AND `status` != 0 AND act_id = #{actId}
+  </select>
+  
+</mapper>
