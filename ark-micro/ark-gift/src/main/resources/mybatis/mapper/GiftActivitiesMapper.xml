@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkgift.mapper.GiftActivitiesMapper" >
+  
+  <sql id="Base_Column_List" >
+    id, created, act_name, created_user, item_name, item_standard, item_price, freight_price, start_date, 
+    end_date, valid, only_new, bgimg, share_title, share_des, share_icon, max_buy_count
+  </sql>
+  
+  <select id="selectById" resultType="com.efruit.micro.arkgift.domain.GiftActivities">
+    select 
+    <include refid="Base_Column_List" />
+    from gift_activities
+    where id = #{id}
+  </select>
+  
+  <insert id="insert">
+    insert into gift_activities (id, act_name, 
+      created_user, item_name, item_standard, item_price, 
+      freight_price, start_date, end_date, 
+      valid, only_new)
+    values (#{id}, #{actName}, 
+      #{createdUser}, #{itemName}, #{itemStandard}, #{itemPrice}, 
+      #{freightPrice}, #{startDate}, #{endDate}, 
+      #{valid}, #{onlyNew})
+  </insert>
+  
+  <update id="updateByIdSelective">
+    update gift_activities
+    <set >
+      <if test="actName != null" >
+        act_name = #{actName},
+      </if>
+      <if test="createdUser != null" >
+        created_user = #{createdUser},
+      </if>
+      <if test="itemName != null" >
+        item_name = #{itemName},
+      </if>
+      <if test="itemStandard != null" >
+        item_standard = #{itemStandard},
+      </if>
+      <if test="itemPrice != null" >
+        item_price = #{itemPrice},
+      </if>
+      <if test="freightPrice != null" >
+        freight_price = #{freightPrice},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid},
+      </if>
+      <if test="onlyNew != null" >
+        only_new = #{onlyNew},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateById">
+    update gift_activities
+    set created = #{created},
+      act_name = #{actName},
+      created_user = #{createdUser},
+      item_name = #{itemName},
+      item_standard = #{itemStandard},
+      item_price = #{itemPrice},
+      freight_price = #{freightPrice},
+      start_date = #{startDate},
+      end_date = #{endDate},
+      valid = #{valid},
+      only_new = #{onlyNew}
+    where id = #{id}
+  </update>
+  
+  <select id="getCurrValidInfo" resultType="com.efruit.micro.arkgift.domain.GiftActivities">
+    select 
+    <include refid="Base_Column_List" />
+    from gift_activities
+    where start_date &lt; now() AND end_date &gt; now() AND valid = 1 LIMIT 0,1
+  </select>
+  
+</mapper>
