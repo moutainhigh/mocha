@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.DispatchingFetchCodeInfoMapper">
+    <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="address_id" property="addressId" jdbcType="BIGINT"/>
+        <result column="area_id" property="areaId" jdbcType="BIGINT"/>
+        <result column="user_mobile" property="userMobile" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="send_date" property="sendDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, address_id, user_mobile, code, send_date, area_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_fetch_code
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from dispatching_fetch_code
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <select id="selectByAddressTelSendDate" resultMap="BaseResultMap"
+            parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_fetch_code
+        <where>
+            <if test="addressId != null">
+                and address_id = #{addressId,jdbcType=BIGINT}
+            </if>
+            <if test="areaId != null">
+                and area_id = #{areaId,jdbcType=BIGINT}
+            </if>
+            <if test="userMobile != null">
+                and user_mobile = #{userMobile,jdbcType=VARCHAR}
+            </if>
+            <if test="sendDate != null">
+                and send_date = #{sendDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBySelective" resultMap="BaseResultMap"
+            parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_fetch_code
+        <where>
+            <if test="id != null">
+               and  id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="addressId != null">
+                and address_id = #{addressId,jdbcType=BIGINT}
+            </if>
+            <if test="areaId != null">
+                and area_id = #{areaId,jdbcType=BIGINT}
+            </if>
+            <if test="userMobile != null">
+                and user_mobile = #{userMobile,jdbcType=VARCHAR}
+            </if>
+            <if test="code != null">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="sendDate != null">
+                and send_date = #{sendDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <select id="getMaxCodeByAddressSendDate" resultType="java.lang.Integer"
+            parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+    select
+    ifnull(MAX(cast(code as SIGNED)),100)
+    from dispatching_fetch_code
+    where area_id = #{arg0}
+    and send_date = #{arg1}
+  </select>
+
+    <select id="selectBySendTime" resultMap="BaseResultMap" parameterType="java.util.Date">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_fetch_code
+        where send_date = #{sendDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+    insert into dispatching_fetch_code (id, address_id, user_mobile, code, send_date, area_id)
+    values (#{id,jdbcType=BIGINT}, #{addressId,jdbcType=BIGINT}, #{userMobile,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{sendDate,jdbcType=TIMESTAMP}, #{areaId,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+        insert into dispatching_fetch_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="userMobile != null">
+                user_mobile,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="sendDate != null">
+                send_date,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="addressId != null">
+                #{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="userMobile != null">
+                #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="sendDate != null">
+                #{sendDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+        update dispatching_fetch_code
+        <set>
+            <if test="addressId != null">
+                address_id = #{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="userMobile != null">
+                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="sendDate != null">
+                send_date = #{sendDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendDate != null">
+                area_id = #{areaId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+    update dispatching_fetch_code
+    set address_id = #{addressId,jdbcType=BIGINT},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=BIGINT},
+      send_date = #{sendDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <update id="updateAreaByAddress" >
+    update dispatching_fetch_code
+    set
+      area_id = #{areaId,jdbcType=BIGINT}
+    where address_id = #{addressId}
+  </update>
+
+
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into dispatching_fetch_code (id, address_id, user_mobile,
+        code, send_date, area_id)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.addressId,jdbcType=BIGINT}, #{item.userMobile,jdbcType=VARCHAR},
+            #{item.code,jdbcType=VARCHAR}, #{item.sendDate,jdbcType=TIMESTAMP}, #{item.areaId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.OrderItemInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.OrderItemInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="oid" property="oid" jdbcType="VARCHAR" />
+    <result column="item_type" property="itemType" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="BIGINT" />
+    <result column="outer_sku_id" property="outerSkuId" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="total_fee" property="totalFee" jdbcType="BIGINT" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+    <result column="sku_properties_name" property="skuPropertiesName" jdbcType="VARCHAR" />
+    <result column="start_deliver_date" property="startDeliverDate" jdbcType="TIMESTAMP" />
+    <result column="end_deliver_date" property="endDeliverDate" jdbcType="TIMESTAMP" />
+    <result column="deliver_count" property="deliverCount" jdbcType="BIGINT" />
+    <result column="admin_msg" property="adminMsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tid, oid, item_type, title, num, outer_sku_id, price, total_fee, item_id, sku_id, 
+    sku_properties_name, start_deliver_date, end_deliver_date, deliver_count, admin_msg
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_item_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_item_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_item_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfoExample" >
+    delete from order_item_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfo" >
+    insert into order_item_info (id, tid, oid, 
+      item_type, title, num, 
+      outer_sku_id, price, total_fee, 
+      item_id, sku_id, sku_properties_name, 
+      start_deliver_date, end_deliver_date, deliver_count, 
+      admin_msg)
+    values (#{id,jdbcType=BIGINT}, #{tid,jdbcType=VARCHAR}, #{oid,jdbcType=VARCHAR}, 
+      #{itemType,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, 
+      #{outerSkuId,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{totalFee,jdbcType=BIGINT}, 
+      #{itemId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, #{skuPropertiesName,jdbcType=VARCHAR}, 
+      #{startDeliverDate,jdbcType=TIMESTAMP}, #{endDeliverDate,jdbcType=TIMESTAMP}, #{deliverCount,jdbcType=BIGINT}, 
+      #{adminMsg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfo" >
+    insert into order_item_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="outerSkuId != null" >
+        outer_sku_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="skuPropertiesName != null" >
+        sku_properties_name,
+      </if>
+      <if test="startDeliverDate != null" >
+        start_deliver_date,
+      </if>
+      <if test="endDeliverDate != null" >
+        end_deliver_date,
+      </if>
+      <if test="deliverCount != null" >
+        deliver_count,
+      </if>
+      <if test="adminMsg != null" >
+        admin_msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=BIGINT},
+      </if>
+      <if test="outerSkuId != null" >
+        #{outerSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=BIGINT},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuPropertiesName != null" >
+        #{skuPropertiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDeliverDate != null" >
+        #{startDeliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDeliverDate != null" >
+        #{endDeliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliverCount != null" >
+        #{deliverCount,jdbcType=BIGINT},
+      </if>
+      <if test="adminMsg != null" >
+        #{adminMsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfoExample" resultType="java.lang.Integer" >
+    select count(*) from order_item_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_item_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemType != null" >
+        item_type = #{record.itemType,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=BIGINT},
+      </if>
+      <if test="record.outerSkuId != null" >
+        outer_sku_id = #{record.outerSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.skuId != null" >
+        sku_id = #{record.skuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.skuPropertiesName != null" >
+        sku_properties_name = #{record.skuPropertiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDeliverDate != null" >
+        start_deliver_date = #{record.startDeliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDeliverDate != null" >
+        end_deliver_date = #{record.endDeliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliverCount != null" >
+        deliver_count = #{record.deliverCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminMsg != null" >
+        admin_msg = #{record.adminMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_item_info
+    set id = #{record.id,jdbcType=BIGINT},
+      tid = #{record.tid,jdbcType=VARCHAR},
+      oid = #{record.oid,jdbcType=VARCHAR},
+      item_type = #{record.itemType,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      num = #{record.num,jdbcType=BIGINT},
+      outer_sku_id = #{record.outerSkuId,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=BIGINT},
+      total_fee = #{record.totalFee,jdbcType=BIGINT},
+      item_id = #{record.itemId,jdbcType=BIGINT},
+      sku_id = #{record.skuId,jdbcType=BIGINT},
+      sku_properties_name = #{record.skuPropertiesName,jdbcType=VARCHAR},
+      start_deliver_date = #{record.startDeliverDate,jdbcType=TIMESTAMP},
+      end_deliver_date = #{record.endDeliverDate,jdbcType=TIMESTAMP},
+      deliver_count = #{record.deliverCount,jdbcType=BIGINT},
+      admin_msg = #{record.adminMsg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfo" >
+    update order_item_info
+    <set >
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        item_type = #{itemType,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=BIGINT},
+      </if>
+      <if test="outerSkuId != null" >
+        outer_sku_id = #{outerSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuPropertiesName != null" >
+        sku_properties_name = #{skuPropertiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDeliverDate != null" >
+        start_deliver_date = #{startDeliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDeliverDate != null" >
+        end_deliver_date = #{endDeliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliverCount != null" >
+        deliver_count = #{deliverCount,jdbcType=BIGINT},
+      </if>
+      <if test="adminMsg != null" >
+        admin_msg = #{adminMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.OrderItemInfo" >
+    update order_item_info
+    set tid = #{tid,jdbcType=VARCHAR},
+      oid = #{oid,jdbcType=VARCHAR},
+      item_type = #{itemType,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      num = #{num,jdbcType=BIGINT},
+      outer_sku_id = #{outerSkuId,jdbcType=VARCHAR},
+      price = #{price,jdbcType=BIGINT},
+      total_fee = #{totalFee,jdbcType=BIGINT},
+      item_id = #{itemId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT},
+      sku_properties_name = #{skuPropertiesName,jdbcType=VARCHAR},
+      start_deliver_date = #{startDeliverDate,jdbcType=TIMESTAMP},
+      end_deliver_date = #{endDeliverDate,jdbcType=TIMESTAMP},
+      deliver_count = #{deliverCount,jdbcType=BIGINT},
+      admin_msg = #{adminMsg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertList" parameterType="java.util.List" >
+    insert into order_item_info (id, tid, oid,
+      item_type, title, num,
+      outer_sku_id, price, total_fee,
+      item_id, sku_id, sku_properties_name,
+      start_deliver_date, end_deliver_date, deliver_count,
+      admin_msg)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.id,jdbcType=BIGINT}, #{item.tid,jdbcType=VARCHAR}, #{item.oid,jdbcType=VARCHAR},
+      #{item.itemType,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.num,jdbcType=BIGINT},
+      #{item.outerSkuId,jdbcType=VARCHAR}, #{item.price,jdbcType=BIGINT}, #{item.totalFee,jdbcType=BIGINT},
+      #{item.itemId,jdbcType=BIGINT}, #{item.skuId,jdbcType=BIGINT}, #{item.skuPropertiesName,jdbcType=VARCHAR},
+      #{item.startDeliverDate,jdbcType=TIMESTAMP}, #{item.endDeliverDate,jdbcType=TIMESTAMP}, #{item.deliverCount,jdbcType=BIGINT},
+      #{item.adminMsg,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

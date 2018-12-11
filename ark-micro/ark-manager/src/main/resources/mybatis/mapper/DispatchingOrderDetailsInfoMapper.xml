@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.DispatchingOrderDetailsInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="BIGINT" />
+    <result column="oid" property="oid" jdbcType="VARCHAR" />
+    <result column="refund_state" property="refundState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tid, cid, order_num,oid,refund_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dispatching_order_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dispatching_order_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo" >
+    insert into dispatching_order_details (id, tid, cid, order_num,oid,refund_state
+      )
+    values (#{id,jdbcType=BIGINT}, #{tid,jdbcType=VARCHAR}, #{cid,jdbcType=BIGINT},
+    #{orderNum,jdbcType=BIGINT}, #{oid,jdbcType=VARCHAR}, #{refundState,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertList" parameterType="java.util.List" >
+    insert into dispatching_order_details (id, tid, cid, order_num,oid,refund_state
+      )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.id,jdbcType=BIGINT}, #{item.tid,jdbcType=VARCHAR}, #{item.cid,jdbcType=BIGINT}, #{item.orderNum,jdbcType=BIGINT},
+      #{item.oid,jdbcType=VARCHAR}, #{item.refundState,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo" >
+    insert into dispatching_order_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="refundState != null" >
+        refund_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=BIGINT},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="refundState != null" >
+        #{refundState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo" >
+    update dispatching_order_details
+    <set >
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=BIGINT},
+      </if>
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="refundState != null" >
+        refund_state =  #{refundState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo" >
+    update dispatching_order_details
+    set tid = #{tid,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=BIGINT},
+      oid = #{oid,jdbcType=VARCHAR},
+      refund_state =  #{refundState,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateRefundStateByTidOid" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo" >
+    update dispatching_order_details
+    set
+      refund_state = #{refundState,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR} and  oid = #{oid,jdbcType=BIGINT}
+  </update>
+
+</mapper>

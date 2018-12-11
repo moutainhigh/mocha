@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.OrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.OrderInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="status_str" property="statusStr" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="express_type" property="expressType" jdbcType="INTEGER" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="fans_type" property="fansType" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="fans_id" property="fansId" jdbcType="BIGINT" />
+    <result column="fans_nickname" property="fansNickname" jdbcType="VARCHAR" />
+    <result column="buyer_message" property="buyerMessage" jdbcType="VARCHAR" />
+    <result column="trade_memo" property="tradeMemo" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="BIGINT" />
+    <result column="post_fee" property="postFee" jdbcType="BIGINT" />
+    <result column="payment" property="payment" jdbcType="BIGINT" />
+    <result column="delivery_address" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="delivery_postal_code" property="deliveryPostalCode" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_tel" property="receiverTel" jdbcType="VARCHAR" />
+    <result column="delivery_province" property="deliveryProvince" jdbcType="VARCHAR" />
+    <result column="delivery_city" property="deliveryCity" jdbcType="VARCHAR" />
+    <result column="delivery_district" property="deliveryDistrict" jdbcType="VARCHAR" />
+    <result column="self_fetch_id" property="selfFetchId" jdbcType="BIGINT" />
+    <result column="self_fetch_name" property="selfFetchName" jdbcType="VARCHAR" />
+    <result column="self_fetch_tel" property="selfFetchTel" jdbcType="VARCHAR" />
+    <result column="self_fetch_user" property="selfFetchUser" jdbcType="VARCHAR" />
+    <result column="self_fetch_user_tel" property="selfFetchUserTel" jdbcType="VARCHAR" />
+    <result column="lon" property="lon" jdbcType="VARCHAR" />
+    <result column="lat" property="lat" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, status, status_str, created, pay_time, update_time, express_type, pay_type, tid, 
+    fans_type, buyer_id, fans_id, fans_nickname, buyer_message, trade_memo, total_fee, 
+    post_fee, payment, delivery_address, delivery_postal_code, receiver_name, receiver_tel, 
+    delivery_province, delivery_city, delivery_district, self_fetch_id, self_fetch_name, 
+    self_fetch_tel, self_fetch_user, self_fetch_user_tel, lon, lat
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfoExample" >
+    delete from order_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfo" >
+    insert into order_info (id, status, status_str, 
+      created, pay_time, update_time, 
+      express_type, pay_type, tid, 
+      fans_type, buyer_id, fans_id, 
+      fans_nickname, buyer_message, trade_memo, 
+      total_fee, post_fee, payment, 
+      delivery_address, delivery_postal_code, receiver_name, 
+      receiver_tel, delivery_province, delivery_city, 
+      delivery_district, self_fetch_id, self_fetch_name, 
+      self_fetch_tel, self_fetch_user, self_fetch_user_tel, 
+      lon, lat)
+    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{statusStr,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{expressType,jdbcType=INTEGER}, #{payType,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR}, 
+      #{fansType,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT}, #{fansId,jdbcType=BIGINT}, 
+      #{fansNickname,jdbcType=VARCHAR}, #{buyerMessage,jdbcType=VARCHAR}, #{tradeMemo,jdbcType=VARCHAR}, 
+      #{totalFee,jdbcType=BIGINT}, #{postFee,jdbcType=BIGINT}, #{payment,jdbcType=BIGINT}, 
+      #{deliveryAddress,jdbcType=VARCHAR}, #{deliveryPostalCode,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, 
+      #{receiverTel,jdbcType=VARCHAR}, #{deliveryProvince,jdbcType=VARCHAR}, #{deliveryCity,jdbcType=VARCHAR}, 
+      #{deliveryDistrict,jdbcType=VARCHAR}, #{selfFetchId,jdbcType=BIGINT}, #{selfFetchName,jdbcType=VARCHAR}, 
+      #{selfFetchTel,jdbcType=VARCHAR}, #{selfFetchUser,jdbcType=VARCHAR}, #{selfFetchUserTel,jdbcType=VARCHAR}, 
+      #{lon,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfo" >
+    insert into order_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusStr != null" >
+        status_str,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="expressType != null" >
+        express_type,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="fansType != null" >
+        fans_type,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="fansId != null" >
+        fans_id,
+      </if>
+      <if test="fansNickname != null" >
+        fans_nickname,
+      </if>
+      <if test="buyerMessage != null" >
+        buyer_message,
+      </if>
+      <if test="tradeMemo != null" >
+        trade_memo,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="postFee != null" >
+        post_fee,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="deliveryAddress != null" >
+        delivery_address,
+      </if>
+      <if test="deliveryPostalCode != null" >
+        delivery_postal_code,
+      </if>
+      <if test="receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="receiverTel != null" >
+        receiver_tel,
+      </if>
+      <if test="deliveryProvince != null" >
+        delivery_province,
+      </if>
+      <if test="deliveryCity != null" >
+        delivery_city,
+      </if>
+      <if test="deliveryDistrict != null" >
+        delivery_district,
+      </if>
+      <if test="selfFetchId != null" >
+        self_fetch_id,
+      </if>
+      <if test="selfFetchName != null" >
+        self_fetch_name,
+      </if>
+      <if test="selfFetchTel != null" >
+        self_fetch_tel,
+      </if>
+      <if test="selfFetchUser != null" >
+        self_fetch_user,
+      </if>
+      <if test="selfFetchUserTel != null" >
+        self_fetch_user_tel,
+      </if>
+      <if test="lon != null" >
+        lon,
+      </if>
+      <if test="lat != null" >
+        lat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="statusStr != null" >
+        #{statusStr,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expressType != null" >
+        #{expressType,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="fansType != null" >
+        #{fansType,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="fansId != null" >
+        #{fansId,jdbcType=BIGINT},
+      </if>
+      <if test="fansNickname != null" >
+        #{fansNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMessage != null" >
+        #{buyerMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeMemo != null" >
+        #{tradeMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="postFee != null" >
+        #{postFee,jdbcType=BIGINT},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryAddress != null" >
+        #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPostalCode != null" >
+        #{deliveryPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryProvince != null" >
+        #{deliveryProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCity != null" >
+        #{deliveryCity,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDistrict != null" >
+        #{deliveryDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchId != null" >
+        #{selfFetchId,jdbcType=BIGINT},
+      </if>
+      <if test="selfFetchName != null" >
+        #{selfFetchName,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchTel != null" >
+        #{selfFetchTel,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchUser != null" >
+        #{selfFetchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchUserTel != null" >
+        #{selfFetchUserTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null" >
+        #{lon,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfoExample" resultType="java.lang.Integer" >
+    select count(*) from order_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusStr != null" >
+        status_str = #{record.statusStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expressType != null" >
+        express_type = #{record.expressType,jdbcType=INTEGER},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fansType != null" >
+        fans_type = #{record.fansType,jdbcType=BIGINT},
+      </if>
+      <if test="record.buyerId != null" >
+        buyer_id = #{record.buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fansId != null" >
+        fans_id = #{record.fansId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fansNickname != null" >
+        fans_nickname = #{record.fansNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyerMessage != null" >
+        buyer_message = #{record.buyerMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeMemo != null" >
+        trade_memo = #{record.tradeMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.postFee != null" >
+        post_fee = #{record.postFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliveryAddress != null" >
+        delivery_address = #{record.deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryPostalCode != null" >
+        delivery_postal_code = #{record.deliveryPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverName != null" >
+        receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverTel != null" >
+        receiver_tel = #{record.receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryProvince != null" >
+        delivery_province = #{record.deliveryProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryCity != null" >
+        delivery_city = #{record.deliveryCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryDistrict != null" >
+        delivery_district = #{record.deliveryDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfFetchId != null" >
+        self_fetch_id = #{record.selfFetchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.selfFetchName != null" >
+        self_fetch_name = #{record.selfFetchName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfFetchTel != null" >
+        self_fetch_tel = #{record.selfFetchTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfFetchUser != null" >
+        self_fetch_user = #{record.selfFetchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfFetchUserTel != null" >
+        self_fetch_user_tel = #{record.selfFetchUserTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lon != null" >
+        lon = #{record.lon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lat != null" >
+        lat = #{record.lat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_info
+    set id = #{record.id,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      status_str = #{record.statusStr,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      express_type = #{record.expressType,jdbcType=INTEGER},
+      pay_type = #{record.payType,jdbcType=INTEGER},
+      tid = #{record.tid,jdbcType=VARCHAR},
+      fans_type = #{record.fansType,jdbcType=BIGINT},
+      buyer_id = #{record.buyerId,jdbcType=BIGINT},
+      fans_id = #{record.fansId,jdbcType=BIGINT},
+      fans_nickname = #{record.fansNickname,jdbcType=VARCHAR},
+      buyer_message = #{record.buyerMessage,jdbcType=VARCHAR},
+      trade_memo = #{record.tradeMemo,jdbcType=VARCHAR},
+      total_fee = #{record.totalFee,jdbcType=BIGINT},
+      post_fee = #{record.postFee,jdbcType=BIGINT},
+      payment = #{record.payment,jdbcType=BIGINT},
+      delivery_address = #{record.deliveryAddress,jdbcType=VARCHAR},
+      delivery_postal_code = #{record.deliveryPostalCode,jdbcType=VARCHAR},
+      receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      receiver_tel = #{record.receiverTel,jdbcType=VARCHAR},
+      delivery_province = #{record.deliveryProvince,jdbcType=VARCHAR},
+      delivery_city = #{record.deliveryCity,jdbcType=VARCHAR},
+      delivery_district = #{record.deliveryDistrict,jdbcType=VARCHAR},
+      self_fetch_id = #{record.selfFetchId,jdbcType=BIGINT},
+      self_fetch_name = #{record.selfFetchName,jdbcType=VARCHAR},
+      self_fetch_tel = #{record.selfFetchTel,jdbcType=VARCHAR},
+      self_fetch_user = #{record.selfFetchUser,jdbcType=VARCHAR},
+      self_fetch_user_tel = #{record.selfFetchUserTel,jdbcType=VARCHAR},
+      lon = #{record.lon,jdbcType=VARCHAR},
+      lat = #{record.lat,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfo" >
+    update order_info
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="statusStr != null" >
+        status_str = #{statusStr,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expressType != null" >
+        express_type = #{expressType,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="fansType != null" >
+        fans_type = #{fansType,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="fansId != null" >
+        fans_id = #{fansId,jdbcType=BIGINT},
+      </if>
+      <if test="fansNickname != null" >
+        fans_nickname = #{fansNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMessage != null" >
+        buyer_message = #{buyerMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeMemo != null" >
+        trade_memo = #{tradeMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="postFee != null" >
+        post_fee = #{postFee,jdbcType=BIGINT},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryAddress != null" >
+        delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPostalCode != null" >
+        delivery_postal_code = #{deliveryPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryProvince != null" >
+        delivery_province = #{deliveryProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCity != null" >
+        delivery_city = #{deliveryCity,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDistrict != null" >
+        delivery_district = #{deliveryDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchId != null" >
+        self_fetch_id = #{selfFetchId,jdbcType=BIGINT},
+      </if>
+      <if test="selfFetchName != null" >
+        self_fetch_name = #{selfFetchName,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchTel != null" >
+        self_fetch_tel = #{selfFetchTel,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchUser != null" >
+        self_fetch_user = #{selfFetchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="selfFetchUserTel != null" >
+        self_fetch_user_tel = #{selfFetchUserTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null" >
+        lon = #{lon,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.OrderInfo" >
+    update order_info
+    set status = #{status,jdbcType=VARCHAR},
+      status_str = #{statusStr,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      express_type = #{expressType,jdbcType=INTEGER},
+      pay_type = #{payType,jdbcType=INTEGER},
+      tid = #{tid,jdbcType=VARCHAR},
+      fans_type = #{fansType,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      fans_id = #{fansId,jdbcType=BIGINT},
+      fans_nickname = #{fansNickname,jdbcType=VARCHAR},
+      buyer_message = #{buyerMessage,jdbcType=VARCHAR},
+      trade_memo = #{tradeMemo,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=BIGINT},
+      post_fee = #{postFee,jdbcType=BIGINT},
+      payment = #{payment,jdbcType=BIGINT},
+      delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      delivery_postal_code = #{deliveryPostalCode,jdbcType=VARCHAR},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      delivery_province = #{deliveryProvince,jdbcType=VARCHAR},
+      delivery_city = #{deliveryCity,jdbcType=VARCHAR},
+      delivery_district = #{deliveryDistrict,jdbcType=VARCHAR},
+      self_fetch_id = #{selfFetchId,jdbcType=BIGINT},
+      self_fetch_name = #{selfFetchName,jdbcType=VARCHAR},
+      self_fetch_tel = #{selfFetchTel,jdbcType=VARCHAR},
+      self_fetch_user = #{selfFetchUser,jdbcType=VARCHAR},
+      self_fetch_user_tel = #{selfFetchUserTel,jdbcType=VARCHAR},
+      lon = #{lon,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertList" parameterType="java.util.List" >
+    insert into order_info (id, status, status_str,
+      created, pay_time, update_time,
+      express_type, pay_type, tid,
+      fans_type, buyer_id, fans_id,
+      fans_nickname, buyer_message, trade_memo,
+      total_fee, post_fee, payment,
+      delivery_address, delivery_postal_code, receiver_name,
+      receiver_tel, delivery_province, delivery_city,
+      delivery_district, self_fetch_id, self_fetch_name,
+      self_fetch_tel, self_fetch_user, self_fetch_user_tel,
+      lon, lat)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.id,jdbcType=BIGINT}, #{item.status,jdbcType=VARCHAR}, #{item.statusStr,jdbcType=VARCHAR},
+      #{item.created,jdbcType=TIMESTAMP}, #{item.payTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.expressType,jdbcType=INTEGER}, #{item.payType,jdbcType=INTEGER}, #{item.tid,jdbcType=VARCHAR},
+      #{item.fansType,jdbcType=BIGINT}, #{item.buyerId,jdbcType=BIGINT}, #{item.fansId,jdbcType=BIGINT},
+      #{item.fansNickname,jdbcType=VARCHAR}, #{item.buyerMessage,jdbcType=VARCHAR}, #{item.tradeMemo,jdbcType=VARCHAR},
+      #{item.totalFee,jdbcType=BIGINT}, #{item.postFee,jdbcType=BIGINT}, #{item.payment,jdbcType=BIGINT},
+      #{item.deliveryAddress,jdbcType=VARCHAR}, #{item.deliveryPostalCode,jdbcType=VARCHAR}, #{item.receiverName,jdbcType=VARCHAR},
+      #{item.receiverTel,jdbcType=VARCHAR}, #{item.deliveryProvince,jdbcType=VARCHAR}, #{item.deliveryCity,jdbcType=VARCHAR},
+      #{item.deliveryDistrict,jdbcType=VARCHAR}, #{item.selfFetchId,jdbcType=BIGINT}, #{item.selfFetchName,jdbcType=VARCHAR},
+      #{item.selfFetchTel,jdbcType=VARCHAR}, #{item.selfFetchUser,jdbcType=VARCHAR}, #{item.selfFetchUserTel,jdbcType=VARCHAR},
+      #{item.lon,jdbcType=VARCHAR}, #{item.lat,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <select id="getLastOrderInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from order_info order by created desc LIMIT 1
+  </select>
+</mapper>

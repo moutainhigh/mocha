@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.AOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.AOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_mobile" property="receiverMobile" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_sku" property="productSku" jdbcType="VARCHAR" />
+    <result column="product_price" property="productPrice" jdbcType="BIGINT" />
+    <result column="payment" property="payment" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="receiver_address" property="receiverAddress" jdbcType="VARCHAR" />
+    <result column="shipping_type" property="shippingType" jdbcType="VARCHAR" />
+    <result column="buyer_msg" property="buyerMsg" jdbcType="VARCHAR" />
+    <result column="trade_msg" property="tradeMsg" jdbcType="VARCHAR" />
+    <result column="youzan_status" property="youzanStatus" jdbcType="VARCHAR" />
+    <result column="order_valid_status" property="orderValidStatus" jdbcType="INTEGER" />
+    <result column="renew_order_parent_id" property="renewOrderParentId" jdbcType="BIGINT" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="order_period_type" property="orderPeriodType" jdbcType="INTEGER" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="order_start_send_date" property="orderStartSendDate" jdbcType="TIMESTAMP" />
+    <result column="initial_order_day" property="initialOrderDay" jdbcType="INTEGER" />
+    <result column="renew_later_day" property="renewLaterDay" jdbcType="INTEGER" />
+    <result column="item_count" property="itemCount" jdbcType="INTEGER" />
+    <result column="admin_msg" property="adminMsg" jdbcType="VARCHAR" />
+    <result column="last_date" property="lastDate" jdbcType="TIMESTAMP" />
+    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, tid, user_nickname, receiver_name, receiver_mobile, product_name, product_sku, 
+    product_price, payment, created, pay_time, receiver_address, shipping_type, buyer_msg, 
+    trade_msg, youzan_status, order_valid_status, renew_order_parent_id, order_type, 
+    order_period_type, update_date, order_start_send_date, initial_order_day, renew_later_day, 
+    item_count, admin_msg, last_date, sku_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efruit.micro.arkmanager.pojo.AOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from a_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from a_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from a_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efruit.micro.arkmanager.pojo.AOrderExample" >
+    delete from a_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.AOrder" >
+    insert into a_order (id, user_id, tid, 
+      user_nickname, receiver_name, receiver_mobile, 
+      product_name, product_sku, product_price, 
+      payment, created, pay_time, 
+      receiver_address, shipping_type, buyer_msg, 
+      trade_msg, youzan_status, order_valid_status, 
+      renew_order_parent_id, order_type, order_period_type, 
+      update_date, order_start_send_date, initial_order_day, 
+      renew_later_day, item_count, admin_msg, 
+      last_date, sku_name)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, 
+      #{userNickname,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{receiverMobile,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{productSku,jdbcType=VARCHAR}, #{productPrice,jdbcType=BIGINT}, 
+      #{payment,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{receiverAddress,jdbcType=VARCHAR}, #{shippingType,jdbcType=VARCHAR}, #{buyerMsg,jdbcType=VARCHAR}, 
+      #{tradeMsg,jdbcType=VARCHAR}, #{youzanStatus,jdbcType=VARCHAR}, #{orderValidStatus,jdbcType=INTEGER}, 
+      #{renewOrderParentId,jdbcType=BIGINT}, #{orderType,jdbcType=INTEGER}, #{orderPeriodType,jdbcType=INTEGER}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{orderStartSendDate,jdbcType=TIMESTAMP}, #{initialOrderDay,jdbcType=INTEGER}, 
+      #{renewLaterDay,jdbcType=INTEGER}, #{itemCount,jdbcType=INTEGER}, #{adminMsg,jdbcType=VARCHAR}, 
+      #{lastDate,jdbcType=TIMESTAMP}, #{skuName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.AOrder" >
+    insert into a_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="userNickname != null" >
+        user_nickname,
+      </if>
+      <if test="receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="receiverMobile != null" >
+        receiver_mobile,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="productSku != null" >
+        product_sku,
+      </if>
+      <if test="productPrice != null" >
+        product_price,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="receiverAddress != null" >
+        receiver_address,
+      </if>
+      <if test="shippingType != null" >
+        shipping_type,
+      </if>
+      <if test="buyerMsg != null" >
+        buyer_msg,
+      </if>
+      <if test="tradeMsg != null" >
+        trade_msg,
+      </if>
+      <if test="youzanStatus != null" >
+        youzan_status,
+      </if>
+      <if test="orderValidStatus != null" >
+        order_valid_status,
+      </if>
+      <if test="renewOrderParentId != null" >
+        renew_order_parent_id,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="orderPeriodType != null" >
+        order_period_type,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="orderStartSendDate != null" >
+        order_start_send_date,
+      </if>
+      <if test="initialOrderDay != null" >
+        initial_order_day,
+      </if>
+      <if test="renewLaterDay != null" >
+        renew_later_day,
+      </if>
+      <if test="itemCount != null" >
+        item_count,
+      </if>
+      <if test="adminMsg != null" >
+        admin_msg,
+      </if>
+      <if test="lastDate != null" >
+        last_date,
+      </if>
+      <if test="skuName != null" >
+        sku_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickname != null" >
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null" >
+        #{receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productSku != null" >
+        #{productSku,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=BIGINT},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=BIGINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiverAddress != null" >
+        #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingType != null" >
+        #{shippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMsg != null" >
+        #{buyerMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeMsg != null" >
+        #{tradeMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="youzanStatus != null" >
+        #{youzanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderValidStatus != null" >
+        #{orderValidStatus,jdbcType=INTEGER},
+      </if>
+      <if test="renewOrderParentId != null" >
+        #{renewOrderParentId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderPeriodType != null" >
+        #{orderPeriodType,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStartSendDate != null" >
+        #{orderStartSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="initialOrderDay != null" >
+        #{initialOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="renewLaterDay != null" >
+        #{renewLaterDay,jdbcType=INTEGER},
+      </if>
+      <if test="itemCount != null" >
+        #{itemCount,jdbcType=INTEGER},
+      </if>
+      <if test="adminMsg != null" >
+        #{adminMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDate != null" >
+        #{lastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuName != null" >
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efruit.micro.arkmanager.pojo.AOrderExample" resultType="java.lang.Integer" >
+    select count(*) from a_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update a_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userNickname != null" >
+        user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverName != null" >
+        receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverMobile != null" >
+        receiver_mobile = #{record.receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null" >
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSku != null" >
+        product_sku = #{record.productSku,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPrice != null" >
+        product_price = #{record.productPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=BIGINT},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receiverAddress != null" >
+        receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingType != null" >
+        shipping_type = #{record.shippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyerMsg != null" >
+        buyer_msg = #{record.buyerMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeMsg != null" >
+        trade_msg = #{record.tradeMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.youzanStatus != null" >
+        youzan_status = #{record.youzanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderValidStatus != null" >
+        order_valid_status = #{record.orderValidStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.renewOrderParentId != null" >
+        renew_order_parent_id = #{record.renewOrderParentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderPeriodType != null" >
+        order_period_type = #{record.orderPeriodType,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderStartSendDate != null" >
+        order_start_send_date = #{record.orderStartSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.initialOrderDay != null" >
+        initial_order_day = #{record.initialOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.renewLaterDay != null" >
+        renew_later_day = #{record.renewLaterDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemCount != null" >
+        item_count = #{record.itemCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.adminMsg != null" >
+        admin_msg = #{record.adminMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastDate != null" >
+        last_date = #{record.lastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.skuName != null" >
+        sku_name = #{record.skuName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update a_order
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=VARCHAR},
+      user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      receiver_mobile = #{record.receiverMobile,jdbcType=VARCHAR},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_sku = #{record.productSku,jdbcType=VARCHAR},
+      product_price = #{record.productPrice,jdbcType=BIGINT},
+      payment = #{record.payment,jdbcType=BIGINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      shipping_type = #{record.shippingType,jdbcType=VARCHAR},
+      buyer_msg = #{record.buyerMsg,jdbcType=VARCHAR},
+      trade_msg = #{record.tradeMsg,jdbcType=VARCHAR},
+      youzan_status = #{record.youzanStatus,jdbcType=VARCHAR},
+      order_valid_status = #{record.orderValidStatus,jdbcType=INTEGER},
+      renew_order_parent_id = #{record.renewOrderParentId,jdbcType=BIGINT},
+      order_type = #{record.orderType,jdbcType=INTEGER},
+      order_period_type = #{record.orderPeriodType,jdbcType=INTEGER},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      order_start_send_date = #{record.orderStartSendDate,jdbcType=TIMESTAMP},
+      initial_order_day = #{record.initialOrderDay,jdbcType=INTEGER},
+      renew_later_day = #{record.renewLaterDay,jdbcType=INTEGER},
+      item_count = #{record.itemCount,jdbcType=INTEGER},
+      admin_msg = #{record.adminMsg,jdbcType=VARCHAR},
+      last_date = #{record.lastDate,jdbcType=TIMESTAMP},
+      sku_name = #{record.skuName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.AOrder" >
+    update a_order
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickname != null" >
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null" >
+        receiver_mobile = #{receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productSku != null" >
+        product_sku = #{productSku,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        product_price = #{productPrice,jdbcType=BIGINT},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=BIGINT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiverAddress != null" >
+        receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingType != null" >
+        shipping_type = #{shippingType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMsg != null" >
+        buyer_msg = #{buyerMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeMsg != null" >
+        trade_msg = #{tradeMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="youzanStatus != null" >
+        youzan_status = #{youzanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderValidStatus != null" >
+        order_valid_status = #{orderValidStatus,jdbcType=INTEGER},
+      </if>
+      <if test="renewOrderParentId != null" >
+        renew_order_parent_id = #{renewOrderParentId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderPeriodType != null" >
+        order_period_type = #{orderPeriodType,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStartSendDate != null" >
+        order_start_send_date = #{orderStartSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="initialOrderDay != null" >
+        initial_order_day = #{initialOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="renewLaterDay != null" >
+        renew_later_day = #{renewLaterDay,jdbcType=INTEGER},
+      </if>
+      <if test="itemCount != null" >
+        item_count = #{itemCount,jdbcType=INTEGER},
+      </if>
+      <if test="adminMsg != null" >
+        admin_msg = #{adminMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDate != null" >
+        last_date = #{lastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuName != null" >
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.AOrder" >
+    update a_order
+    set user_id = #{userId,jdbcType=VARCHAR},
+      tid = #{tid,jdbcType=VARCHAR},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_mobile = #{receiverMobile,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_sku = #{productSku,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=BIGINT},
+      payment = #{payment,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      shipping_type = #{shippingType,jdbcType=VARCHAR},
+      buyer_msg = #{buyerMsg,jdbcType=VARCHAR},
+      trade_msg = #{tradeMsg,jdbcType=VARCHAR},
+      youzan_status = #{youzanStatus,jdbcType=VARCHAR},
+      order_valid_status = #{orderValidStatus,jdbcType=INTEGER},
+      renew_order_parent_id = #{renewOrderParentId,jdbcType=BIGINT},
+      order_type = #{orderType,jdbcType=INTEGER},
+      order_period_type = #{orderPeriodType,jdbcType=INTEGER},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      order_start_send_date = #{orderStartSendDate,jdbcType=TIMESTAMP},
+      initial_order_day = #{initialOrderDay,jdbcType=INTEGER},
+      renew_later_day = #{renewLaterDay,jdbcType=INTEGER},
+      item_count = #{itemCount,jdbcType=INTEGER},
+      admin_msg = #{adminMsg,jdbcType=VARCHAR},
+      last_date = #{lastDate,jdbcType=TIMESTAMP},
+      sku_name = #{skuName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <sql id="where_by_condition">
+    <where>
+      <if test="onlyNeedValid == 1">
+        and o.receiver_mobile is not null and o.receiver_mobile != '' and o.receiver_address is not null and o.receiver_address != ''
+      </if>
+
+      <if test="targetDate != null">
+        and o.id not in
+        (SELECT order_id FROM order_delay d where DATE_FORMAT(#{targetDate},'%Y-%m-%d') = DATE_FORMAT(d.order_delay_date,'%Y-%m-%d'))
+        and DATE_FORMAT(o.last_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{targetDate},'%Y-%m-%d')
+        and DATE_FORMAT(#{targetDate},'%Y-%m-%d') &gt;= DATE_FORMAT(o.order_start_send_date,'%Y-%m-%d')
+      </if>
+      <if test="startDate != null">
+        and DATE_FORMAT(o.created,'%Y-%m-%d %H:%i:%S') &gt;= DATE_FORMAT(#{startDate},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="endDate != null">
+        and DATE_FORMAT(o.created,'%Y-%m-%d %H:%i:%S') &lt;= DATE_FORMAT(#{endDate},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="receiverName != null and receiverName != '' ">
+        and o.receiver_name like concat('%',#{receiverName},'%')
+      </if>
+      <if test="userNickName != null and userNickName != '' ">
+        and o.user_nickname like concat('%',#{userNickName},'%')
+      </if>
+      <if test="productName != null and productName != ''">
+        and o.product_name like concat('%',#{productName},'%')
+      </if>
+      <if test="userId != null and userId != '' ">
+        and o.user_id=#{userId}
+      </if>
+      <if test="orderValidStatus != null and orderValidStatus &gt; 0">
+        and o.order_valid_status=#{orderValidStatus}
+      </if>
+      <if test="orderType != null and orderType &gt;0">
+        and o.order_type =#{orderType}
+      </if>
+      <if test="orderPeriodType != null and orderPeriodType >0">
+        and o.order_period_type = #{orderPeriodType}
+      </if>
+      <if test="receiverMobile != null and receiverMobile != '' ">
+        and o.receiver_mobile like concat('%',#{receiverMobile},'%')
+      </if>
+      <if test="receiverAddress != null and receiverAddress != '' ">
+        and o.receiver_address like concat('%',#{receiverAddress},'%')
+      </if>
+
+      <if test="orderStatusList != null and orderStatusList.size > 0">
+        and o.youzan_status in
+        <foreach collection="orderStatusList" item="item" open="(" separator=","  close=")">
+          #{item}
+        </foreach>
+      </if>
+
+      <if test="minFee >= 0 and maxFee > 0 and maxFee >= minFee">
+        and o.payment &gt;= #{minFee} and o.payment &lt;= #{maxFee}
+      </if>
+
+      <if test="productSku != null and productSku != '' ">
+        and o.product_sku = #{productSku}
+      </if>
+
+        <if test="tid != null and tid != '' ">
+            and o.tid = #{tid}
+        </if>
+
+    </where>
+
+  </sql>
+
+  <select id="getOrderList" parameterType="com.efruit.micro.arkmanager.bean.OrderCondition" resultMap="BaseResultMap">
+    select * from a_order o
+    <include refid="where_by_condition"/>
+
+    <choose>
+      <when test="orderBy == 2">
+        ORDER By o.created asc
+      </when>
+      <otherwise>
+        ORDER By o.created desc
+      </otherwise>
+    </choose>
+
+    <if test="size > 0">
+      LIMIT #{index},#{size}
+    </if>
+  </select>
+
+  <select id="getOrderListCountByUserId" parameterType="com.efruit.micro.arkmanager.bean.OrderCondition" resultType="int">
+  select count(o.id) from a_order o
+    <where>
+
+      <if test="userId != null and userId != '' ">
+        and o.user_id=#{userId}
+      </if>
+
+      <if test="onlyNeedValid == 1">
+        and o.receiver_mobile is not null and o.receiver_mobile != '' and o.receiver_address is not null and
+        o.receiver_address != ''
+      </if>
+
+      <if test="orderStatusList != null and orderStatusList.size > 0">
+        and o.youzan_status in
+        <foreach collection="orderStatusList" item="item" open="(" separator=","  close=")">
+          #{item}
+        </foreach>
+      </if>
+
+    </where>
+
+  </select>
+
+  <select id="getOrderListCount" parameterType="com.efruit.micro.arkmanager.bean.OrderCondition" resultType="int">
+    select count(o.id) from a_order o
+    <include refid="where_by_condition"/>
+  </select>
+
+  <select id="getOrderById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from a_order o
+    where o.id=#{id}
+  </select>
+
+  <select id="getUserIdListByMobile" parameterType="String" resultType="String">
+    select user_id from a_order where receiver_mobile = #{mobile} group by user_id
+  </select>
+
+  <!--获取最后一条订单-->
+  <select id="getLastOrder" resultMap="BaseResultMap">
+    SELECT  * FROM a_order ORDER BY created desc LIMIT 1
+  </select>
+
+  <select id="getAddressList" resultType="String">
+    select receiver_address from a_order
+    where receiver_address is not null and receiver_address &lt;&gt;''
+    group by receiver_address
+  </select>
+
+  <insert id="insertOrderList" parameterType="java.util.List">
+    insert into a_order (id, user_id, tid,
+    user_nickname, receiver_name, receiver_mobile,
+    product_name, product_sku, product_price,
+    payment, created, pay_time,
+    receiver_address, shipping_type, buyer_msg,
+    trade_msg, youzan_status, order_valid_status,
+    renew_order_parent_id, order_type, order_period_type,
+    update_date, order_start_send_date, initial_order_day,
+    renew_later_day, item_count, admin_msg, last_date, sku_name)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.userId,jdbcType=VARCHAR}, #{item.tid,jdbcType=VARCHAR},
+      #{item.userNickname,jdbcType=VARCHAR}, #{item.receiverName,jdbcType=VARCHAR}, #{item.receiverMobile,jdbcType=VARCHAR},
+      #{item.productName,jdbcType=VARCHAR}, #{item.productSku,jdbcType=VARCHAR}, #{item.productPrice,jdbcType=BIGINT},
+      #{item.payment,jdbcType=BIGINT}, #{item.created,jdbcType=TIMESTAMP}, #{item.payTime,jdbcType=TIMESTAMP},
+      #{item.receiverAddress,jdbcType=VARCHAR}, #{item.shippingType,jdbcType=VARCHAR}, #{item.buyerMsg,jdbcType=VARCHAR},
+      #{item.tradeMsg,jdbcType=VARCHAR}, #{item.youzanStatus,jdbcType=VARCHAR}, #{item.orderValidStatus,jdbcType=INTEGER},
+      #{item.renewOrderParentId,jdbcType=BIGINT}, #{item.orderType,jdbcType=INTEGER}, #{item.orderPeriodType,jdbcType=INTEGER},
+      #{item.updateDate,jdbcType=TIMESTAMP}, #{item.orderStartSendDate,jdbcType=TIMESTAMP}, #{item.initialOrderDay,jdbcType=INTEGER},
+      #{item.renewLaterDay,jdbcType=INTEGER}, #{item.itemCount,jdbcType=INTEGER}, #{item.adminMsg,jdbcType=VARCHAR},
+      #{item.lastDate,jdbcType=TIMESTAMP}, #{item.skuName,jdbcType=VARCHAR},
+      )
+    </foreach>
+
+  </insert>
+</mapper>

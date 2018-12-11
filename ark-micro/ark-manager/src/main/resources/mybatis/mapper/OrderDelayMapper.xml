@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.OrderDelayMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.OrderDelay" >
+    <id column="delay_id" property="delayId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_delay_date" property="orderDelayDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    delay_id, order_id, order_delay_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelayExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_delay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_delay
+    where delay_id = #{delayId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_delay
+    where delay_id = #{delayId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelayExample" >
+    delete from order_delay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelay" >
+    insert into order_delay (delay_id, order_id, order_delay_date
+      )
+    values (#{delayId,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, #{orderDelayDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelay" >
+    insert into order_delay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="delayId != null" >
+        delay_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderDelayDate != null" >
+        order_delay_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="delayId != null" >
+        #{delayId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDelayDate != null" >
+        #{orderDelayDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelayExample" resultType="java.lang.Integer" >
+    select count(*) from order_delay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_delay
+    <set >
+      <if test="record.delayId != null" >
+        delay_id = #{record.delayId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderDelayDate != null" >
+        order_delay_date = #{record.orderDelayDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_delay
+    set delay_id = #{record.delayId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=BIGINT},
+      order_delay_date = #{record.orderDelayDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelay" >
+    update order_delay
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDelayDate != null" >
+        order_delay_date = #{orderDelayDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where delay_id = #{delayId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.OrderDelay" >
+    update order_delay
+    set order_id = #{orderId,jdbcType=BIGINT},
+      order_delay_date = #{orderDelayDate,jdbcType=TIMESTAMP}
+    where delay_id = #{delayId,jdbcType=INTEGER}
+  </update>
+  <select id="getOrderDelayByOrderId" parameterType="com.efruit.micro.arkmanager.bean.OrderCondition" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from order_delay
+    <where>
+      order_id=#{orderId}
+      <if test="targetDate != null">
+        and DATE_FORMAT(order_delay_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{targetDate},'%Y-%m-%d')
+      </if>
+      <if test="startDate != null">
+        and DATE_FORMAT(order_delay_date,'%Y-%m-%d') >= DATE_FORMAT(#{startDate},'%Y-%m-%d')
+      </if>
+      <if test="endDate != null">
+        and DATE_FORMAT(order_delay_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate},'%Y-%m-%d')
+      </if>
+    </where>
+  </select>
+
+    <select id="getValidDelayDate" parameterType="com.efruit.micro.arkmanager.bean.OrderCondition" resultType="date">
+        SELECT distinct order_delay_date
+        from order_delay
+        <where>
+            order_id=#{orderId} and DATE_FORMAT(order_delay_date,'%Y-%m-%d') &gt; DATE_FORMAT(#{targetDate},'%Y-%m-%d')
+        </where>
+    </select>
+
+  <insert id="insertList" parameterType="java.util.List">
+    insert into order_delay (delay_id, order_id, order_delay_date)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.delayId,jdbcType=INTEGER},
+      #{item.orderId,jdbcType=BIGINT},
+      #{item.orderDelayDate,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+</mapper>

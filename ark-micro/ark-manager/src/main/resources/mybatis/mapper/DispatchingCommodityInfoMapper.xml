@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.DispatchingCommodityInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo" >
+    <id column="id" property="itemId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="item_type" property="itemType" jdbcType="BIGINT" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, status, item_type, pic_path, alias, create_time,sku_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dispatching_commodity_info
+    where id = #{itemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dispatching_commodity_info
+    where id = #{itemId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo" >
+    insert into dispatching_commodity_info (id, title, status, 
+      item_type, pic_path, alias, 
+      create_time,sku_id)
+    values (#{itemId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{itemType,jdbcType=BIGINT}, #{picPath,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP},#{skuId,jdbcType=BIGINT})
+  </insert>
+
+
+  <insert id="insertList" parameterType="java.util.List" >
+    insert into dispatching_commodity_info (id, title, status,
+      item_type, pic_path, alias,
+      create_time,sku_id)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.itemId,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER},
+      #{item.itemType,jdbcType=BIGINT}, #{item.picPath,jdbcType=VARCHAR}, #{item.alias,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP},#{item.skuId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo" >
+    insert into dispatching_commodity_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="picPath != null" >
+        pic_path,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=BIGINT},
+      </if>
+      <if test="picPath != null" >
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo" >
+    update dispatching_commodity_info
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="itemType != null" >
+        item_type = #{itemType,jdbcType=BIGINT},
+      </if>
+      <if test="picPath != null" >
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{itemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo" >
+    update dispatching_commodity_info
+    set title = #{title,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      item_type = #{itemType,jdbcType=BIGINT},
+      pic_path = #{picPath,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+      sku_id = #{skuId,jdbcType=BIGINT}
+    where id = #{itemId,jdbcType=BIGINT}
+  </update>
+</mapper>

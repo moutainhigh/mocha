@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.DispatchingOrderMapper">
+    <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+        <id column="tid" property="tid" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="statusStr" property="statusStr" jdbcType="VARCHAR"/>
+        <result column="express_type" property="expressType" jdbcType="BIGINT"/>
+        <result column="pay_type_str" property="payTypeStr" jdbcType="VARCHAR"/>
+        <result column="buyer_exf" property="buyerExf" jdbcType="VARCHAR"/>
+        <result column="trade_exf" property="tradeExf" jdbcType="VARCHAR"/>
+        <result column="fetch_status" property="fetchStatus" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="BIGINT"/>
+        <result column="pay_type" property="payType" jdbcType="BIGINT"/>
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+        <result column="payTime" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="expired_time" property="expiredTime" jdbcType="TIMESTAMP"/>
+        <result column="confirm_time" property="confirmTime" jdbcType="TIMESTAMP"/>
+        <result column="consign_time" property="consignTime" jdbcType="TIMESTAMP"/>
+        <result column="reissue_time" property="reissueTime" jdbcType="TIMESTAMP"/>
+        <result column="refund_state" property="refundState" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="address_id" property="addressId" jdbcType="BIGINT"/>
+        <result column="buyer_id" property="buyerId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    tid, status, statusStr, express_type, pay_type_str, buyer_exf, trade_exf, fetch_status, 
+    type, pay_type, send_time, payTime, created, update_time, expired_time, confirm_time, 
+    consign_time, refund_state, create_time, address_id, buyer_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_order
+        where tid = #{tid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dispatching_order
+    where tid = #{tid,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+    insert into dispatching_order (tid, status, statusStr, 
+      express_type, pay_type_str, buyer_exf, 
+      trade_exf, fetch_status, type, 
+      pay_type, send_time, payTime, 
+      created, update_time, expired_time, 
+      confirm_time, consign_time, refund_state, 
+      create_time, address_id, buyer_id
+      )
+    values (#{tid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{statusStr,jdbcType=VARCHAR},
+      #{expressType,jdbcType=BIGINT}, #{payTypeStr,jdbcType=VARCHAR}, #{buyerExf,jdbcType=VARCHAR}, 
+      #{tradeExf,jdbcType=VARCHAR}, #{fetchStatus,jdbcType=INTEGER}, #{type,jdbcType=BIGINT},
+      #{payType,jdbcType=BIGINT}, #{sendTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
+      #{created,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expiredTime,jdbcType=TIMESTAMP}, 
+      #{confirmTime,jdbcType=TIMESTAMP}, #{consignTime,jdbcType=TIMESTAMP}, #{refundState,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{addressId,jdbcType=BIGINT}, #{buyerId,jdbcType=VARCHAR}
+      )
+  </insert>
+
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into dispatching_order (tid, status, statusStr,
+        express_type, pay_type_str, buyer_exf,
+        trade_exf, fetch_status, type,
+        pay_type, send_time, payTime,
+        created, update_time, expired_time,
+        confirm_time, consign_time, refund_state,
+        create_time, address_id, buyer_id
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.tid,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR}, #{item.statusStr,jdbcType=VARCHAR},
+            #{item.expressType,jdbcType=BIGINT}, #{item.payTypeStr,jdbcType=VARCHAR}, #{item.buyerExf,jdbcType=VARCHAR},
+            #{item.tradeExf,jdbcType=VARCHAR}, #{item.fetchStatus,jdbcType=INTEGER}, #{item.type,jdbcType=BIGINT},
+            #{item.payType,jdbcType=BIGINT}, #{item.sendTime,jdbcType=TIMESTAMP}, #{item.payTime,jdbcType=TIMESTAMP},
+            #{item.created,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.expiredTime,jdbcType=TIMESTAMP},
+            #{item.confirmTime,jdbcType=TIMESTAMP}, #{item.consignTime,jdbcType=TIMESTAMP},
+            #{item.refundState,jdbcType=BIGINT},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.addressId,jdbcType=BIGINT}, #{item.buyerId,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="selectBySelective" resultMap="BaseResultMap"
+            parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_order
+        where
+        <if test="tid != null">
+            #{tid,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null">
+            #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="statusStr != null">
+            #{statusStr,jdbcType=VARCHAR},
+        </if>
+        <if test="expressType != null">
+            #{expressType,jdbcType=BIGINT},
+        </if>
+        <if test="payTypeStr != null">
+            #{payTypeStr,jdbcType=VARCHAR},
+        </if>
+        <if test="buyerExf != null">
+            #{buyerExf,jdbcType=VARCHAR},
+        </if>
+        <if test="tradeExf != null">
+            #{tradeExf,jdbcType=VARCHAR},
+        </if>
+        <if test="fetchStatus != null">
+            #{fetchStatus,jdbcType=INTEGER},
+        </if>
+        <if test="type != null">
+            #{type,jdbcType=BIGINT},
+        </if>
+        <if test="payType != null">
+            #{payType,jdbcType=BIGINT},
+        </if>
+        <if test="sendTime != null">
+            #{sendTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="payTime != null">
+            #{payTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="created != null">
+            #{created,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="expiredTime != null">
+            #{expiredTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="confirmTime != null">
+            #{confirmTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="consignTime != null">
+            #{consignTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="refundState != null">
+            #{refundState,jdbcType=BIGINT},
+        </if>
+        <if test="createTime != null">
+            #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="addressId != null">
+            #{addressId,jdbcType=BIGINT},
+        </if>
+        <if test="buyerId != null">
+            #{buyerId,jdbcType=VARCHAR},
+        </if>
+
+    </select>
+
+    <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+        insert into dispatching_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="statusStr != null">
+                statusStr,
+            </if>
+            <if test="expressType != null">
+                express_type,
+            </if>
+            <if test="payTypeStr != null">
+                pay_type_str,
+            </if>
+            <if test="buyerExf != null">
+                buyer_exf,
+            </if>
+            <if test="tradeExf != null">
+                trade_exf,
+            </if>
+            <if test="fetchStatus != null">
+                fetch_status,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="sendTime != null">
+                send_time,
+            </if>
+            <if test="payTime != null">
+                payTime,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="expiredTime != null">
+                expired_time,
+            </if>
+            <if test="confirmTime != null">
+                confirm_time,
+            </if>
+            <if test="consignTime != null">
+                consign_time,
+            </if>
+            <if test="refundState != null">
+                refund_state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="buyerId != null">
+                buyer_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tid != null">
+                #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="statusStr != null">
+                #{statusStr,jdbcType=VARCHAR},
+            </if>
+            <if test="expressType != null">
+                #{expressType,jdbcType=BIGINT},
+            </if>
+            <if test="payTypeStr != null">
+                #{payTypeStr,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerExf != null">
+                #{buyerExf,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeExf != null">
+                #{tradeExf,jdbcType=VARCHAR},
+            </if>
+            <if test="fetchStatus != null">
+                #{fetchStatus,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIGINT},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=BIGINT},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expiredTime != null">
+                #{expiredTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="confirmTime != null">
+                #{confirmTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="consignTime != null">
+                #{consignTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundState != null">
+                #{refundState,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addressId != null">
+                #{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="buyerId != null">
+                #{buyerId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+        update dispatching_order
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="statusStr != null">
+                statusStr = #{statusStr,jdbcType=VARCHAR},
+            </if>
+            <if test="expressType != null">
+                express_type = #{expressType,jdbcType=BIGINT},
+            </if>
+            <if test="payTypeStr != null">
+                pay_type_str = #{payTypeStr,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerExf != null">
+                buyer_exf = #{buyerExf,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeExf != null">
+                trade_exf = #{tradeExf,jdbcType=VARCHAR},
+            </if>
+            <if test="fetchStatus != null">
+                fetch_status = #{fetchStatus,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIGINT},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=BIGINT},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                payTime = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expiredTime != null">
+                expired_time = #{expiredTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="confirmTime != null">
+                confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="consignTime != null">
+                consign_time = #{consignTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundState != null">
+                refund_state = #{refundState,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addressId != null">
+                address_id = #{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="buyerId != null">
+                buyer_id = #{buyerId,jdbcType=VARCHAR},
+            </if>
+            <if test="reissueTime != null">
+                reissue_time = #{reissueTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where tid = #{tid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+    update dispatching_order
+    set status = #{status,jdbcType=VARCHAR},
+      statusStr = #{statusStr,jdbcType=VARCHAR},
+      express_type = #{expressType,jdbcType=BIGINT},
+      pay_type_str = #{payTypeStr,jdbcType=VARCHAR},
+      buyer_exf = #{buyerExf,jdbcType=VARCHAR},
+      trade_exf = #{tradeExf,jdbcType=VARCHAR},
+      fetch_status = #{fetchStatus,jdbcType=INTEGER},
+      type = #{type,jdbcType=BIGINT},
+      pay_type = #{payType,jdbcType=BIGINT},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      payTime = #{payTime,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      expired_time = #{expiredTime,jdbcType=TIMESTAMP},
+      confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+      consign_time = #{consignTime,jdbcType=TIMESTAMP},
+      refund_state = #{refundState,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      address_id = #{addressId,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
+
+
+    <resultMap type="com.efruit.micro.arkmanager.pojo.DispatchingOrder" id="orderListAndItemsResultMap">
+        <id column="tid" property="tid" jdbcType="VARCHAR"/>
+        <result column="fetch_status" property="fetchStatus" jdbcType="INTEGER"/>
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="reissue_time" property="reissueTime" jdbcType="TIMESTAMP"/>
+        <!-- 地址 -->
+        <association property="address" javaType="com.efruit.micro.arkmanager.pojo.DispatchingAddressInfo">
+            <id column="addressId" property="id" jdbcType="BIGINT"/>
+            <result column="addressDetails" property="address" jdbcType="VARCHAR"/>
+            <result column="addressName" property="name" jdbcType="VARCHAR"/>
+            <!-- 区域 -->
+            <association property="areaInfo" javaType="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo">
+                <id column="areaId" property="id" jdbcType="BIGINT"/>
+                <result column="aTitle" property="aTitle" jdbcType="VARCHAR"/>
+            </association>
+        </association>
+        <!-- 购买者 -->
+        <association property="buyer" javaType="com.efruit.micro.arkmanager.pojo.DispatchingBuyerInfo">
+            <id column="user_mobile" property="userMobile" jdbcType="VARCHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+            <!-- 取货码 -->
+            <association property="fetchCodeInfo" javaType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+                <id column="fId" property="id" jdbcType="BIGINT"/>
+                <result column="code" property="code" jdbcType="VARCHAR"/>
+            </association>
+        </association>
+        <!-- 订单明细 一个订单包括 多个明细 -->
+        <collection property="orderDetailsInfoList"
+                    ofType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo">
+            <id column="orderDetailsId" property="id" jdbcType="BIGINT"/>
+            <result column="order_num" property="orderNum" jdbcType="BIGINT"/>
+            <!-- 商品信息 一个订单明细对应一个商品 -->
+            <association property="commodityInfo"
+                         javaType="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo">
+                <id column="itemId" property="itemId" jdbcType="BIGINT"/>
+                <result column="title" property="title" jdbcType="VARCHAR"/>
+                <result column="img" property="picPath" jdbcType="VARCHAR"/>
+                <!-- 规格信息 一个商品对应一个规格 -->
+                <association property="skuTypeInfo"
+                             javaType="com.efruit.micro.arkmanager.pojo.DispatchingSkuTypeInfo">
+                    <id column="sku_id" property="id" jdbcType="BIGINT"/>
+                    <result column="sku_name" property="title" jdbcType="VARCHAR"/>
+                </association>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="selectByDateAndAddress" resultMap="orderListAndItemsResultMap">
+        select * from (
+        SELECT
+        ad.id addressId,
+        ad.name addressName,
+        ad.address addressDetails,
+        area.a_title aTitle,
+        area.id areaId,
+        b.user_name,
+        b.user_mobile,
+        f.code,
+        o.tid,
+        o.fetch_status,
+        c.title,
+        d.id orderDetailsId,
+        d.order_num,
+        s.title sku_name,
+        s.id sku_id
+        FROM
+        dispatching_order o
+        LEFT JOIN dispatching_order_details d ON d.tid = o.tid and d.refund_state = '0'
+        LEFT JOIN dispatching_commodity_info c ON d.cid = c.id
+        LEFT JOIN dispatching_sku_type_info s ON s.id = c.sku_id
+        LEFT JOIN dispatching_buyer_info b ON b.user_mobile = o.buyer_id
+        LEFT JOIN dispatching_fetch_code f ON b.user_mobile = f.user_mobile
+        AND o.address_id = f.address_id
+        AND o.send_time = f.send_date
+        LEFT JOIN dispatching_address ad on o.address_id = ad.id
+        LEFT JOIN dispatching_area_info area on area.id = ad.area_id
+        <where>
+            <if test="addressId != null">
+                and ad.id = #{addressId,jdbcType=BIGINT}
+            </if>
+            <if test="sendDate != null">
+                and o.send_time = #{sendDate,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by area.id , ad.id
+        ) t where title is not NULL and tid is not NULL
+    </select>
+
+    <select id="managerOrderList" resultMap="orderListAndItemsResultMap" parameterType="com.efruit.micro.arkmanager.bean.DispatchingManageParam">
+        SELECT
+        ad.id addressId,
+        ad.name addressName,
+        ad.address addressDetails,
+        area.a_title aTitle,
+        area.id areaId,
+        b.user_name,
+        b.user_mobile,
+        f.code,
+        f.id fId,
+        o.tid,
+        o.created,
+        o.reissue_time,
+        o.send_time,
+        o.fetch_status,
+        c.title,
+        c.pic_path img,
+        c.id itemId,
+        d.id orderDetailsId,
+        d.order_num,
+        s.title sku_name,
+        s.id sku_id
+        FROM
+        dispatching_order o
+        LEFT JOIN dispatching_order_details d ON d.tid = o.tid
+        LEFT JOIN dispatching_commodity_info c ON d.cid = c.id
+        LEFT JOIN dispatching_sku_type_info s ON s.id = c.sku_id
+        LEFT JOIN dispatching_buyer_info b ON b.user_mobile = o.buyer_id
+        LEFT JOIN dispatching_fetch_code f ON b.user_mobile = f.user_mobile
+        AND o.address_id = f.address_id
+        AND o.send_time = f.send_date
+        LEFT JOIN dispatching_address ad on o.address_id = ad.id
+        LEFT JOIN dispatching_area_info area on area.id = ad.area_id
+        <include refid="manage_list_where"/>
+        order by send_time desc, areaId asc , CAST(code as SIGNED) asc
+        limit  #{limitStart}, #{limitEnd}
+    </select>
+
+
+    <select id="countManagerOrderList" resultType="java.lang.Integer" parameterType="com.efruit.micro.arkmanager.bean.DispatchingManageParam">
+        SELECT
+        count(DISTINCT o.tid)
+        FROM
+        dispatching_order o
+        LEFT JOIN dispatching_order_details d ON d.tid = o.tid
+        LEFT JOIN dispatching_commodity_info c ON d.cid = c.id
+        LEFT JOIN dispatching_sku_type_info s ON s.id = c.sku_id
+        LEFT JOIN dispatching_buyer_info b ON b.user_mobile = o.buyer_id
+        LEFT JOIN dispatching_fetch_code f ON b.user_mobile = f.user_mobile
+        AND o.address_id = f.address_id
+        AND o.send_time = f.send_date
+        LEFT JOIN dispatching_address ad on o.address_id = ad.id
+        LEFT JOIN dispatching_area_info area on area.id = ad.area_id
+        <include refid="manage_list_where"/>
+    </select>
+
+    <sql id="manage_list_where">
+        <where>
+            c.title is not NULL
+            and o.tid is not NULL
+            and f.code is not null
+            <if test="tid != null">
+                and o.tid = ${tid}
+            </if>
+            <if test="buyerName != null">
+                and  b.user_name like '%${buyerName}%'
+            </if>
+            <if test="buyerTel != null">
+                and b.user_mobile like '%${buyerTel}%'
+            </if>
+            <if test="addressId != null">
+                and ad.id =  #{addressId}
+            </if>
+            <if test="status != null">
+                and o.fetch_status = #{status}
+            </if>
+            <if test="created != null">
+                and o.created = #{created}
+            </if>
+            <if test="sendDate != null">
+                and o.send_time = #{sendDate}
+            </if>
+        </where>
+
+    </sql>
+</mapper>

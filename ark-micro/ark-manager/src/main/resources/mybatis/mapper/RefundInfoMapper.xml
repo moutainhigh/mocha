@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.RefundInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.RefundInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+    <result column="refund_type" property="refundType" jdbcType="VARCHAR" />
+    <result column="refunded_fee" property="refundedFee" jdbcType="BIGINT" />
+    <result column="refund_reason" property="refundReason" jdbcType="VARCHAR" />
+    <result column="refund_id" property="refundId" jdbcType="VARCHAR" />
+    <result column="oids" property="oids" jdbcType="VARCHAR" />
+    <result column="transaction" property="transaction" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="outerTransactions" property="outertransactions" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tid, msg_type, created, refund_time, refund_type, refunded_fee, refund_reason, 
+    refund_id, oids, transaction, status, outerTransactions
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from refund_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from refund_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from refund_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfoExample" >
+    delete from refund_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfo" >
+    insert into refund_info (id, tid, msg_type, 
+      created, refund_time, refund_type, 
+      refunded_fee, refund_reason, refund_id, 
+      oids, transaction, status, 
+      outerTransactions)
+    values (#{id,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, #{msgType,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{refundTime,jdbcType=TIMESTAMP}, #{refundType,jdbcType=VARCHAR}, 
+      #{refundedFee,jdbcType=BIGINT}, #{refundReason,jdbcType=VARCHAR}, #{refundId,jdbcType=VARCHAR}, 
+      #{oids,jdbcType=VARCHAR}, #{transaction,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{outertransactions,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfo" >
+    insert into refund_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="msgType != null" >
+        msg_type,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="refundTime != null" >
+        refund_time,
+      </if>
+      <if test="refundType != null" >
+        refund_type,
+      </if>
+      <if test="refundedFee != null" >
+        refunded_fee,
+      </if>
+      <if test="refundReason != null" >
+        refund_reason,
+      </if>
+      <if test="refundId != null" >
+        refund_id,
+      </if>
+      <if test="oids != null" >
+        oids,
+      </if>
+      <if test="transaction != null" >
+        transaction,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="outertransactions != null" >
+        outerTransactions,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTime != null" >
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="refundedFee != null" >
+        #{refundedFee,jdbcType=BIGINT},
+      </if>
+      <if test="refundReason != null" >
+        #{refundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="refundId != null" >
+        #{refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="oids != null" >
+        #{oids,jdbcType=VARCHAR},
+      </if>
+      <if test="transaction != null" >
+        #{transaction,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="outertransactions != null" >
+        #{outertransactions,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfoExample" resultType="java.lang.Integer" >
+    select count(*) from refund_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update refund_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgType != null" >
+        msg_type = #{record.msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundTime != null" >
+        refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundType != null" >
+        refund_type = #{record.refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundedFee != null" >
+        refunded_fee = #{record.refundedFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundReason != null" >
+        refund_reason = #{record.refundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundId != null" >
+        refund_id = #{record.refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oids != null" >
+        oids = #{record.oids,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transaction != null" >
+        transaction = #{record.transaction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.outertransactions != null" >
+        outerTransactions = #{record.outertransactions,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update refund_info
+    set id = #{record.id,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=VARCHAR},
+      msg_type = #{record.msgType,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
+      refund_type = #{record.refundType,jdbcType=VARCHAR},
+      refunded_fee = #{record.refundedFee,jdbcType=BIGINT},
+      refund_reason = #{record.refundReason,jdbcType=VARCHAR},
+      refund_id = #{record.refundId,jdbcType=VARCHAR},
+      oids = #{record.oids,jdbcType=VARCHAR},
+      transaction = #{record.transaction,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      outerTransactions = #{record.outertransactions,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfo" >
+    update refund_info
+    <set >
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTime != null" >
+        refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundType != null" >
+        refund_type = #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="refundedFee != null" >
+        refunded_fee = #{refundedFee,jdbcType=BIGINT},
+      </if>
+      <if test="refundReason != null" >
+        refund_reason = #{refundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="refundId != null" >
+        refund_id = #{refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="oids != null" >
+        oids = #{oids,jdbcType=VARCHAR},
+      </if>
+      <if test="transaction != null" >
+        transaction = #{transaction,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="outertransactions != null" >
+        outerTransactions = #{outertransactions,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.RefundInfo" >
+    update refund_info
+    set tid = #{tid,jdbcType=VARCHAR},
+      msg_type = #{msgType,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      refund_type = #{refundType,jdbcType=VARCHAR},
+      refunded_fee = #{refundedFee,jdbcType=BIGINT},
+      refund_reason = #{refundReason,jdbcType=VARCHAR},
+      refund_id = #{refundId,jdbcType=VARCHAR},
+      oids = #{oids,jdbcType=VARCHAR},
+      transaction = #{transaction,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      outerTransactions = #{outertransactions,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

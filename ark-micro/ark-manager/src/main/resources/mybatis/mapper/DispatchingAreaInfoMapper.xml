@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efruit.micro.arkmanager.mapper.DispatchingAreaInfoMapper">
+    <resultMap id="BaseResultMap" type="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="a_title" property="aTitle" jdbcType="VARCHAR"/>
+        <result column="a_status" property="aStatus" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, a_title, a_status, update_time, create_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_area_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from dispatching_area_info
+        where a_status = #{aStatus,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from dispatching_area_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo">
+    insert into dispatching_area_info (id, a_title, a_status, 
+      update_time, create_time)
+    values (#{id,jdbcType=BIGINT}, #{aTitle,jdbcType=VARCHAR}, #{aStatus,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo">
+        insert into dispatching_area_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="aTitle != null">
+                a_title,
+            </if>
+            <if test="aStatus != null">
+                a_status,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="aTitle != null">
+                #{aTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="aStatus != null">
+                #{aStatus,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo">
+        update dispatching_area_info
+        <set>
+            <if test="aTitle != null">
+                a_title = #{aTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="aStatus != null">
+                a_status = #{aStatus,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo">
+    update dispatching_area_info
+    set a_title = #{aTitle,jdbcType=VARCHAR},
+      a_status = #{aStatus,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <resultMap type="com.efruit.micro.arkmanager.pojo.DispatchingAreaInfo" id="addressListAndItemsResultMap">
+        <id column="areaId" property="id" jdbcType="BIGINT"/>
+        <result column="aTitle" property="aTitle" jdbcType="VARCHAR"/>
+        <collection property="addressInfoList" ofType="com.efruit.micro.arkmanager.pojo.DispatchingAddressInfo">
+            <id column="addressId" property="id" jdbcType="BIGINT"/>
+            <result column="addressDetails" property="address" jdbcType="VARCHAR"/>
+            <result column="addressName" property="name" jdbcType="VARCHAR"/>
+            <!-- 订单信息 一个用户对应多个订单，使用collection映射 -->
+            <collection property="orderList" ofType="com.efruit.micro.arkmanager.pojo.DispatchingOrder">
+                <id column="tid" property="tid" jdbcType="VARCHAR"/>
+                <result column="fetch_status" property="fetchStatus" jdbcType="INTEGER"/>
+                <association property="buyer" javaType="com.efruit.micro.arkmanager.pojo.DispatchingBuyerInfo">
+                    <id column="user_mobile" property="userMobile" jdbcType="VARCHAR"/>
+                    <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+                    <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+                    <!-- 取货码 -->
+                    <association property="fetchCodeInfo"
+                                 javaType="com.efruit.micro.arkmanager.pojo.DispatchingFetchCodeInfo">
+                        <result column="code" property="code" jdbcType="VARCHAR"/>
+                    </association>
+                </association>
+                <!-- 订单明细 一个订单包括 多个明细 -->
+                <collection property="orderDetailsInfoList"
+                            ofType="com.efruit.micro.arkmanager.pojo.DispatchingOrderDetailsInfo">
+                    <result column="order_num" property="orderNum" jdbcType="BIGINT"/>
+                    <!-- 商品信息 一个订单明细对应一个商品 -->
+                    <association property="commodityInfo"
+                                 javaType="com.efruit.micro.arkmanager.pojo.DispatchingCommodityInfo">
+                        <id column="id" property="itemId" jdbcType="BIGINT"/>
+                        <result column="title" property="title" jdbcType="VARCHAR"/>
+                        <!-- 规格信息 一个商品对应一个规格 -->
+                        <association property="skuTypeInfo"
+                                     javaType="com.efruit.micro.arkmanager.pojo.DispatchingSkuTypeInfo">
+                            <id column="sku_id" property="id" jdbcType="BIGINT"/>
+                            <result column="sku_name" property="title" jdbcType="VARCHAR"/>
+                        </association>
+                    </association>
+                </collection>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="selectByDate" resultMap="addressListAndItemsResultMap">
+
+        SELECT
+        ad.id addressId,
+        ad.name addressName,
+        ad.address addressDetails,
+        area.a_title aTitle,
+        area.id areaId,
+        b.user_name,
+        b.user_mobile
+        FROM
+        dispatching_area_info area
+        LEFT JOIN dispatching_address ad on area.id = ad.area_id
+        LEFT JOIN dispatching_order o on o.address_id = ad.id
+        LEFT JOIN dispatching_buyer_info b ON b.user_mobile = o.buyer_id
+        WHERE
+        <if test="addressId != null">
+            ad.id = #{addressId,jdbcType=BIGINT}
+        </if>
+        <if test="sendDate != null">
+            o.send_time = #{sendDate,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+</mapper>
